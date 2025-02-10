@@ -105,6 +105,11 @@ impl<W> Writer<W> {
         &self.writer
     }
 
+    /// Get a reference to the current indentation state.
+    pub fn get_indent(&self) -> Option<&Indentation> {
+        self.indent.as_ref()
+    }
+
     /// Provides a simple, high-level API for writing XML elements.
     ///
     /// Returns an [`ElementWriter`] that simplifies setting attributes and writing
