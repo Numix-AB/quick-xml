@@ -82,6 +82,14 @@ impl<W> Writer<W> {
         }
     }
 
+    /// Creates a `Writer` with ident state.
+    pub fn new_with_indent_state(inner: W, indent: Indentation) -> Writer<W> {
+        Writer {
+            writer: inner,
+            indent: Some(indent),
+        }
+    }
+
     /// Consumes this `Writer`, returning the underlying writer.
     pub fn into_inner(self) -> W {
         self.writer
@@ -589,8 +597,9 @@ where
     }
 }
 
+/// State for indentation
 #[derive(Clone)]
-pub(crate) struct Indentation {
+pub struct Indentation {
     /// todo: this is an awkward fit as it has no impact on indentation logic, but it is
     /// only applicable when an indentation exists. Potentially refactor later
     should_line_break: bool,
@@ -605,6 +614,7 @@ pub(crate) struct Indentation {
 }
 
 impl Indentation {
+    /// Create a new `Indentation` with the given character and size.
     pub fn new(indent_char: u8, indent_size: usize) -> Self {
         Self {
             should_line_break: false,
